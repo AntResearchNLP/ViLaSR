@@ -8,7 +8,7 @@
 
 
 ## 📢 News
-- [2024.06] Data, code and model weights will be released soon. Please stay tuned! 🔥
+- [2025.06] Data, code and model weights will be released soon. Please stay tuned! 🔥
 
 ## 📋 Overview
 <p align="center">
