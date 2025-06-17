@@ -22,6 +22,130 @@
 - [ ] Training code  
 - [ ] Inference code  
 
+## Quickstart
+
+### 1. Data Preparation
+Download the Cold-start dataset [ViLaSR-ColdStart-33k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
+
+Download the reflective rejection sampling dataset [ViLaSR-RSS-8k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
+
+Download the reinforcement learning dataset [ViLaSR-RL-40k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
+
+Then, for the cold start and reflective rejection sampling stage, refer the [format instruction](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/README.md) and update the following customized dataset into dataset_info.json.
+
+For example:
+```
+"vqa_cold_start": {
+		"file_name": "cold_start/vqa.json",
+		"formatting": "sharegpt",
+		"columns": {
+			"messages": "conversations",
+			"images": "images"
+		},
+		"tags": {
+			"role_tag": "role",
+			"content_tag": "content",
+			"user_tag": "user",
+			"assistant_tag": "assistant",
+			"system_tag": "system"
+		}
+	},
+"SR_91k_reflective": {
+		"file_name": "reflective_rejection_sampling/SR_91k.json",
+		"formatting": "sharegpt",
+		"columns": {
+			"messages": "conversations",
+			"images": "images"
+		},
+		"tags": {
+			"role_tag": "role",
+			"content_tag": "content",
+			"user_tag": "user",
+			"assistant_tag": "assistant",
+			"system_tag": "system"
+		}
+	}
+```
+
+The `ViLaSR-data` directory includes cold_start, reflective rejection sampling and reinforcement learning data. Its structure should be (we omit the detailed structure):
+```
+│──cold_start
+│	 ├──GPT4Scene/
+│	 ├──maze/
+│	 ├──SR_91k/
+│	 ├──vqa/
+│	 ├──GPT4Scene.json
+│	 ├──maze.json
+│	 ├──SR_91k.json
+│	 ├──vqa.json
+│──reflective_rejection_sampling
+│	 ├──GPT4Scene
+│	 │	 ├──...
+│	 ├──...
+│──rl
+│	 ├──GPT4Scene-All
+│	 │	 ├──...
+│	 ├──vilasr_rl_data.json
+│──dataset_info.json
+```
+
+### 2. Training
+#### 2.1 Cold-start
+
+We use [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) to finetune the model and put the training script in `train/cold_start`. You can use `8` or `4*8` GPUs of 80G memory to train it. And we recommend use multiple nodes for distributed training (refer to [distributed training on multiple nodes](https://github.com/hiyouga/LLaMA-Factory/blob/main/examples/README.md#full-parameter-fine-tuning)).
+
+You should replace the path of ViLaSR-ColdStart-33k dataset for the `config_cold_start.yaml`, such as `train/cold_start/vilasr_full_qwen2.5_vl_7b/config_cold_start.yaml`.
+
+```
+dataset: vqa_cold_start,maze_cold_start,GPT4Scene_cold_start,SR_91k_cold_start    # specify dataset name
+dataset_dir: /path/to/ViLaSR-data     # the ViLaSR-data path
+```
+
+Then, use the following script to start the training.
+
+```
+cd ViLaSR
+bash train/cold_start/vilasr_full_qwen2.5_vl_7b_32gpu/train_cold_start.sh   # for distributed training
+bash train/cold_start/vilasr_full_qwen2.5_vl_7b_8gpu/train_cold_start.sh    # for single gpu training
+```
+
+#### 2.2 Reflective Rejection Sampling
+
+You should replace the path of ViLaSR-RSS-8k dataset for the `config_reflective.yaml`, such as `train/reflective_rejection_sampling/vilasr_full_qwen2.5_vl_7b/config_reflective.yaml`.
+
+```
+dataset: vqa_reflective,maze_reflective,GPT4Scene_reflective,SR_91k_reflective    # specify dataset name
+dataset_dir: /path/to/ViLaSR-data                                                 # the ViLaSR-data path
+```
+
+Then, use the following script to start the training.
+
+```
+cd ViLaSR
+bash train/reflective_rejection_sampling/vilasr_full_qwen2.5_vl_7b/train_reflective.sh
+```
+
+#### 2.3 RL Training
+
+We use [EasyR1](https://github.com/hiyouga/EasyR1) to train the model by reinforcement learning and put the training script in `train/rl`. You can use `8` or `4*8` GPUs of 80G memory to train it. We recommend use `ray` for multi-node training, refer to [EasyR1 in Multi-node](https://github.com/hiyouga/EasyR1?tab=readme-ov-file#how-to-run-70b-model-in-multi-node-environment)
+
+Then, use the following script to start the training.
+
+```
+cd ViLaSR
+## if use distributed training, start ray head node and worker node first.
+bash train/rl/train_grpo.sh       
+```
+
+### 3. Inference
+
+Comming soon...
+
+
+## Acknowledgment
+
+We sincerely appreciate the valuable contributions from the open-source community. This work builds upon the following projects: [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory), [verl](https://github.com/volcengine/verl) and [EasyR1](https://github.com/hiyouga/EasyR1).
+
 ## 📖 Citation
 If you find our work helpful, please cite our paper:
 ```bibtex
@@ -37,6 +161,3 @@ If you find our work helpful, please cite our paper:
 ```
 
 
-## Acknowledgment
-- [verl](https://github.com/volcengine/verl)
-- [EasyR1](https://github.com/hiyouga/EasyR1)
