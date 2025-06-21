@@ -602,9 +602,9 @@ def eval_model(args):
             if x['problem_type'] == 'multiple choice' and 'options' in x:
                 prompt = prompt + '\n' +  '\n'.join(x['options'])
             prompt = prompt + TYPE_TEMPLATE[x['problem_type'].lower()]
-            width, height = fetch_image({"image": os.path.join(args.image_folder, x["images"][0]), "max_pixels": args.max_pixels}).size
+            width, height = fetch_image({"image": os.path.join(args.image_folder, x["image_path"][0]), "max_pixels": args.max_pixels}).size
             image_messages = []
-            for image_idx, image_path in enumerate(x["images"]):
+            for image_idx, image_path in enumerate(x["image_path"]):
                 image_messages.extend([
                     {
                         "type": "image",
