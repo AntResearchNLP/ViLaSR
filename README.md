@@ -25,13 +25,16 @@
 ## Quickstart
 
 ### 1. Data Preparation
-Download the Cold-start dataset [ViLaSR-ColdStart-33k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
+Download the cold-start, reflective rejection sampling and reinforcement learning dataset [ViLaSR-data](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data). Put the downloaded dataset to `ViLaSR-data`.
 
-Download the reflective rejection sampling dataset [ViLaSR-RSS-8k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
+Then unzip the data
+```
+python unzip.py
+```
 
-Download the reinforcement learning dataset [ViLaSR-RL-40k](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data).
 
-Then, for the cold start and reflective rejection sampling stage, refer the [format instruction](https://github.com/hiyouga/LLaMA-Factory/blob/main/data/README.md) and update the following customized dataset into dataset_info.json.
+The `dataset_info.json` has been formatted in accordance with the [formatting guidelines]((https://github.com/hiyouga/LLaMA-Factory/blob/main/data/README.md)) for instruction tuning.
+
 
 For example:
 ```
