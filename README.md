@@ -175,7 +175,7 @@ sh eval/infer.sh
 Finally, conduct evaluation on the results:
 
 ```
-
+sh eval/evaluate.sh
 ```
 
 ## Acknowledgment
