@@ -140,7 +140,7 @@ cd ViLaSR
 bash train/rl/train_grpo.sh       
 ```
 
-### 3. Inference
+### 3. Inference & Evaluation
 
 You can download the pretrained models:
 - [ViLaSR](https://huggingface.co/AntResearchNLP/ViLaSR)
@@ -153,10 +153,21 @@ CKPT=/path/to/ckpt
 MODE=xxx  
 ```
 
-After configuration, run the evaluation script:
+As we modify the benchmark files for unified evaluation, we recommend using our provided json files and scripts for evaluation.
+
+The json files and images can be downloaded at: [ViLaSR-eval](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-eval), put them in `./benchmark/`. (⚠️ Note: This files is currently incomplete, as we are in the process of uploading image files.)
+
+
+After configuration, run the inference script:
 
 ```
 sh eval/infer.sh
+```
+
+Finally, conduct evaluation on the results:
+
+```
+
 ```
 
 ## Acknowledgment
