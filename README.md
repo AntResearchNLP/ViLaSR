@@ -24,6 +24,14 @@
 
 ## Quickstart
 
+### 0. Setup
+
+```
+conda create -n vilasr python=3.10.16
+conda activate vilasr
+bash setup.sh
+```
+
 ### 1. Data Preparation
 Download the cold-start, reflective rejection sampling and reinforcement learning dataset [ViLaSR-data](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-data). Put the downloaded dataset to `ViLaSR-data`.
 
