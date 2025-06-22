@@ -636,7 +636,7 @@ def eval_model(args):
             if x['problem_type'] == 'multiple choice' and 'options' in x:
                 prompt = prompt + '\n' +  '\n'.join(x['options'])
             prompt =  prompt + '\nThe index of the given image is 1.' + TYPE_TEMPLATE[x['problem_type'].lower()]
-            width, height = fetch_image({"image": os.path.join(args.image_folder, x["image_path"]), "max_pixels": args.max_pixels}).size
+            width, height = fetch_image({"image": os.path.join(args.image_folder, x["image_path"][0]), "max_pixels": args.max_pixels}).size
             msg = [
                 {
                     "role": "system",
@@ -647,7 +647,7 @@ def eval_model(args):
                     "content": [
                         {
                             "type": "image",
-                            "image": os.path.join(args.image_folder, x["image_path"]),
+                            "image": os.path.join(args.image_folder, x["image_path"][0]),
                             "nframes": args.max_frames,
                             "grid_size": x["grid_size"] if "grid_size" in x else None,
                             "max_pixels": args.max_pixels

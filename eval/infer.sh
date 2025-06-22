@@ -1,13 +1,13 @@
 #!/bin/bash
 set -x
-export CUDA_VISIBLE_DEVICES=0,1,2,3   
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 split=0
 all=1
 DATADIR="./benchmark/"
 script_paths=(  
 "vsi_bench"
 "maze"
-"spatialEval_spatialreal"
+"SpatialEval_spatialreal"
 "spar_bench"
 "mmsi_bench"
 )
@@ -21,7 +21,7 @@ echo "Processing shard $split of $all"
 
 for ((i=0; i<${#script_paths[@]}; i++)); do
     QUESTION_FILE=${script_paths[i]}
-    IMAGE_FOLDER=DATADIR
+    IMAGE_FOLDER=$DATADIR
     echo "${QUESTION_FILE}--${IMAGE_FOLDER}"
 
     if [ -z "$IMAGE_FOLDER" ]; then
@@ -36,7 +36,7 @@ for ((i=0; i<${#script_paths[@]}; i++)); do
         --model-path $CKPT \
         --model-name ${model_name} \
         --dataset ${script_paths[i]} \
-        --input-file $DATADIR/benchmark/${QUESTION_FILE}.json \
+        --input-file $DATADIR/${QUESTION_FILE}.json \
         --image-folder $IMAGE_FOLDER \
         --output-dir $RESULTDIR \
         --temperature 0.75 \
