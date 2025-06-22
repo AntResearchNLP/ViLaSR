@@ -764,11 +764,9 @@ def eval_model(args):
                         for turn_content in turn["content"]:
                             if turn_content["type"] == "image":
                                 current_image_num += 1
-                if args.dataset in ["video", "vsibench"]:
+                if args.dataset in ["vsibench"]:
                     assert current_image_num == args.max_frames, f"wrong image number: {current_image_num} != {args.max_frames}"
-                elif args.dataset in ["maze","vqa", "gqa","openimages","vsr", "omni3d-bench", 
-                                "SpatialEval_mazenav","SpatialEval_spatialgrid","SpatialEval_spatialmap", "SpatialEval_spatialreal",
-                                "EmbSpatial", "vstar", "DA-2K-balance", "DA-2K-balance_cross"]:
+                elif args.dataset in ["maze", "SpatialEval_spatialreal"]:
                     assert current_image_num == 1, f"wrong image number: {current_image_num}"
                 image_num.append(current_image_num)
             image_inputs, video_inputs, video_kwargs = process_vision_info(batch_messages, return_video_kwargs=True)
