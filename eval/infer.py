@@ -597,7 +597,7 @@ def eval_model(args):
     data = data[st:ed]
     messages = []
     for xidx, x in enumerate(data[:]):
-        if args.dataset in ["vsibench"]:
+        if args.dataset in ["vsi_bench"]:
             prompt = f"These are frames from a video, numbered from 1 to {args.max_frames} in sequence. That is, the index of each image is 1, 2, 3, ..., {args.max_frames}.\n\nAnswer the quesntion with appropriate tools:\n" + x['question'] # + '\n\nThe final answer should be a single word or phrase.'
             if x['problem_type'] == 'multiple choice' and 'options' in x:
                 prompt = prompt + '\n' +  '\n'.join(x['options'])
@@ -764,7 +764,7 @@ def eval_model(args):
                         for turn_content in turn["content"]:
                             if turn_content["type"] == "image":
                                 current_image_num += 1
-                if args.dataset in ["vsibench"]:
+                if args.dataset in ["vsi_bench"]:
                     assert current_image_num == args.max_frames, f"wrong image number: {current_image_num} != {args.max_frames}"
                 elif args.dataset in ["maze", "SpatialEval_spatialreal"]:
                     assert current_image_num == 1, f"wrong image number: {current_image_num}"
@@ -781,7 +781,7 @@ def eval_model(args):
                     sample_mm_data["image"] = []
                     for current_idx in range(image_num[idx]):
                         width, height = image_inputs[image_idx].size
-                        if args.dataset in ["video", "vsibench"]:   
+                        if args.dataset in ["video", "vsi_bench"]:   
                             sample_mm_data["image"].append(image_inputs[image_idx])             # resize(, Image.Resampling.LANCZOS)
                         else:
                             sample_mm_data["image"].append(image_inputs[image_idx])
