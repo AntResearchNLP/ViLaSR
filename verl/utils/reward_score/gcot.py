@@ -189,27 +189,16 @@ def parse_dialog(serialized_content):
 
 def accuracy_reward(output, ground_truth, question_type):
 
-    # def extract_answer(text):
-    #     pattern = r'<answer>\s*(.*?)\s*</answer>'
-    #     match = re.search(pattern, text, re.DOTALL)
-    #     if match:
-    #         return match.group(1).strip()
-    #     return text
     def extract_answer(text):
         """提取答案，确保返回字符串"""
         try:
-            # 首先打印输入类型，帮助调试
-            # print(f"Input type in extract_answer: {type(text)}")
-            # print(f"Input value: {text}")
-
-            # 确保输入是字符串类型
+           
             if text is None:
                 return ""
             if not isinstance(text, (str, bytes)):
                 text = str(text)
 
             pattern = r'<answer>\s*(.*?)\s*</answer>'
-            # 这里的 re.search 需要字符串或 bytes 类型
             match = re.search(pattern, text, re.DOTALL)
             if match:
                 return match.group(1).strip()
@@ -223,7 +212,6 @@ def accuracy_reward(output, ground_truth, question_type):
             if not isinstance(num_str, str):
                 num_str = str(num_str)
                 
-            # 使用正则表达式提取数字
             number_pattern = r'([-+]?\d*\.?\d+)'
             match = re.search(number_pattern, num_str)
             
@@ -262,27 +250,8 @@ def accuracy_reward(output, ground_truth, question_type):
     try:
         output_ans = extract_answer(output)
         gt_ans = extract_answer(ground_truth)
-        # print(f"Output Ans: {output_ans} | GT Ans: {gt_ans}", end=" ")
         if question_type == "multiple choice":
             reward = 1.0 if output_ans.strip() == gt_ans.strip() else 0.0
-        # elif question_type == "binary":
-        #     reward = 1.0 if gt_ans.lower() in output_ans.lower() else 0.0
-        # elif question_type == "numerical":
-        #     gt_has_decimal = ("." in gt_ans) or ("," in gt_ans)
-        #     out_has_decimal = ("." in output_ans) or ("," in output_ans)
-        #     if gt_has_decimal != out_has_decimal:
-        #         reward = 0.0
-        #     else:
-        #         gt_number = normalize_number(gt_ans)
-        #         out_number = normalize_number(output_ans)
-        #         if gt_number is None or out_number is None:
-        #             reward = 0.0
-        #         else:
-        #             reward = 1.0 if round(gt_number, 2) == round(out_number, 2) else 0.0
-        # elif question_type == "free-form":
-        #     score = compute_rouge_score(gt_ans, output_ans)
-        #     print(f"Free-form: score: gt_ans: {gt_ans}, output_ans: {output_ans}, output_ans {score}")
-        #     reward = max(0.0, min(1.0, score))
         elif question_type in  ["regression", 'numerical']:
             gt_number = normalize_number(gt_ans)
             out_number = normalize_number(output_ans)
@@ -290,9 +259,6 @@ def accuracy_reward(output, ground_truth, question_type):
                 reward = 0.0
             else:
                 reward = mean_relative_accuracy(out_number, gt_number)
-            # rel_diff = (abs(out_number - gt_number) + 1e-9) / (abs(gt_number) + 1e-9)
-            # rel_diff = min(1.0, max(0.0, rel_diff))
-            # reward = 1 - rel_diff
         else:
             reward = 0.0
     except Exception as e:
@@ -315,7 +281,6 @@ def gcot_compute_score(predict_str: str, ground_truth: str, question_type: str, 
     conversations: list = parse_dialog(predict_str)
     format, reflection = format_reward(conversations)
     accuracy = accuracy_reward(conversations[-1]['content'], ground_truth, question_type)
-    # print("Conversations: ", conversations)
     print(f"Question Type: {question_type}, Format: {format}, Accuracy: {accuracy}")
     return {
         "overall": 0.5 * accuracy + 0.5 * format if accuracy > 0.0 else accuracy,

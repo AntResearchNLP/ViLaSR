@@ -237,23 +237,6 @@ def process_single_response(data: ProcessData):
                 plot_movement(image, movement_list[image_index_new], input_height=input_height, input_width=input_width)
                 image_list.append(image)
 
-                # if data.grid_size:
-                #     # 使用缓存的网格计算结果
-                #     centers, cell_size = calculate_grid_centers(input_width, data.grid_size)
-                #     flag = check_path_tracer(movement_list_new, centers, cell_size)
-
-                #     if (not flag):
-                #         return {
-                #             'index': data.index,
-                #             'processed_image_idx': image_index_list,
-                #             'image': image_list,
-                #             'response': data.response,
-                #             'response_ids': data.response_ids,
-                #             'finish_reason': "rule",
-                #             'bbox_list': bbox_list,
-                #             'movement_list': movement_list,
-                #             'is_finished': True,
-                #         }
             except IndexError as e:
                 print(f"Image index error: {str(e)}")
                 return {
@@ -267,38 +250,7 @@ def process_single_response(data: ProcessData):
                     'movement_list': movement_list,
                     'is_finished': True,
                 }
-        #     image = data.mm_data['image'][image_index].copy()
-        #     assert isinstance(image, Image.Image)
-        #     input_width, input_height = image.size
-        #     # print("input_width: ", image_index, input_width)
-        #     # print("input_height: ", image_index, input_height)
-
-        #     # 绘制边界框和移动路径
-        #     plot_bounding_boxes(image, bbox_list[image_index_new], input_height=input_height, input_width=input_width)
-        #     plot_movement(image, movement_list[image_index_new], input_height=input_height, input_width=input_width)
-        #     # # 调整图像大小
-        #     # processed_image = fetch_image({'image': image})
-        #     # image.save(f"tmp{time.time()}.png")
-        #     # image_list.append(image)
-
-            # if data.grid_size:
-            #     centers, cell_size = calculate_grid_centers(image_size=input_width, grid_size=data.grid_size)
-            #     flag = check_path_tracer(movement_list_new, centers, cell_size)
-            #     # image.save(f"tmp{time.time()}.png")
-
-            #     if (not flag):
-            #         # image.save(f"tmp{time.time()}.png")
-            #         return {
-            #             'index': data.index,
-            #             'processed_image_idx': image_index_list,
-            #             'image': image_list,
-            #             'response': data.response,
-            #             'response_ids': data.response_ids,
-            #             'finish_reason': "rule",
-            #             'bbox_list': bbox_list,
-            #             'movement_list': movement_list,
-            #             'is_finished': True,
-            #         }
+        
         return {
             'index': data.index,
             'processed_image_idx': image_index_list,
@@ -935,10 +887,6 @@ class vLLMRollout(BaseRollout):
                 f"Attention mask mismatch at batch index {idx}"
             assert torch.sum(position_ids[idx, :, -prompt_len:].cpu()== new_position_ids[: ,:prompt_len].cpu()) == prompt_len * 3, \
                 f"Attention mask mismatch at batch index {idx}"
-            # assert sum([x==151652 for x in non_tensor_batch["raw_prompt_ids"][idx]]) == len(image_inputs[idx]), \
-            #     f"Number of <|vision_start|> {sum([x==151652 for x in non_tensor_batch['raw_prompt_ids'][idx]])} != Image Inputs {len(image_inputs[idx])}"
-            # assert sum([x==151653 for x in non_tensor_batch["raw_prompt_ids"][idx]]) == len(image_inputs[idx]), \
-            #     f"Number of <|vision_end|> {sum([x==151653 for x in non_tensor_batch['raw_prompt_ids'][idx]])} != Image Inputs {len(image_inputs[idx])}"
 
             assert torch.sum(inputs['input_ids'][0][:prompt_len+self.config.response_length] == 151652) == len(image_inputs[idx]), \
                 f"Number of <|vision_start|> {torch.sum(inputs['input_ids'][0][:prompt_len+self.config.response_length] == 151652)} != Image Inputs {len(image_inputs[idx])}"
