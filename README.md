@@ -8,7 +8,13 @@
 
 
 ## 📢 News
-- [2025.06] Data, code and model weights will be released soon. Please stay tuned! 🔥
+- [2025/06/23] We released the datasets, codes, and model weights!
+- [2025/06] Data, code and model weights will be released soon. Please stay tuned! 
+
+## 🚀 Coming Soon
+- [x] Model weights  
+- [x] Training code, Inference code 
+- [x] Cold start data, evaluation data is coming in these two days
 
 ## 📋 Overview
 <p align="center">
@@ -17,10 +23,6 @@
 
 > As textual reasoning with large language models (LLMs) has advanced significantly, there has been growing interest in enhancing the multimodal reasoning capabilities of large vision-language models (LVLMs). However, existing methods primarily approach multimodal reasoning in a straightforward, text-centric manner, where both reasoning and answer derivation are conducted purely through text, with the only difference being the presence of multimodal input. As a result, these methods often encounter fundamental limitations in spatial reasoning tasks that demand precise geometric understanding and continuous spatial tracking—capabilities that humans achieve through mental visualization and manipulation. To address the limitations, we propose drawing to reason in space, a novel paradigm that enables LVLMs to reason through elementary drawing operations in the visual space. By equipping models with basic drawing operations, including annotating bounding boxes and drawing auxiliary lines, we empower them to express and analyze spatial relationships through direct visual manipulation, meanwhile avoiding the performance ceiling imposed by specialized perception tools in previous tool-integrated reasoning approaches. To cultivate this capability, we develop a three-stage training framework: cold-start training with synthetic data to establish basic drawing abilities, reflective rejection sampling to enhance self-reflection behaviors, and reinforcement learning to directly optimize for target rewards. Extensive experiments demonstrate that our model, named VILASR, consistently outperforms existing methods across diverse spatial reasoning benchmarks, involving maze navigation, static spatial reasoning, video-based reasoning, and multi-view-based reasoning tasks, with an average improvement of 18.4%. Ablation studies reveal the critical role of each training stage, where reflective rejection sampling strengthens the model’s self-correction capabilities, and reinforcement learning effectively unlocks its reasoning potential.
 
-## 🚀 Coming Soon
-- [x] Model weights  
-- [x] Training code, Inference code 
-- [ ] Cold start data, evaluation data is coming in these two days
 
 ## Quickstart
 
@@ -163,8 +165,7 @@ MODE=xxx
 
 As we modify the benchmark files for unified evaluation, we recommend using our provided json files and scripts for evaluation.
 
-The json files and images can be downloaded at: [ViLaSR-eval](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-eval), put them in `./benchmark/`. (⚠️ Note: This files is currently incomplete, as we are in the process of uploading image files.)
-
+The json files and images can be downloaded at: [ViLaSR-eval](https://huggingface.co/datasets/AntResearchNLP/ViLaSR-eval), put them in `./benchmark/`.
 
 After configuration, run the inference script:
 
