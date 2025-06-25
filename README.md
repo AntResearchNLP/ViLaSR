@@ -31,7 +31,7 @@
 ```
 conda create -n vilasr python=3.10.16
 conda activate vilasr
-bash setup.sh
+sh setup.sh
 
 # LLaMA-Factory setup
 git clone https://github.com/hiyouga/LLaMA-Factory.git            
