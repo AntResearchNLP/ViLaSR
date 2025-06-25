@@ -32,6 +32,13 @@
 conda create -n vilasr python=3.10.16
 conda activate vilasr
 bash setup.sh
+
+# LLaMA-Factory setup
+git clone https://github.com/hiyouga/LLaMA-Factory.git            
+# Alternatively, use your local copy of LLaMA-Factory
+cd LLaMA-Factory
+pip install -e ".[torch,metrics]"
+cd ..
 ```
 
 ### 1. Data Preparation

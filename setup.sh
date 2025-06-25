@@ -8,9 +8,3 @@ pip install vllm==0.7.3
 pip install ray==2.47.1
 pip install qwen-vl-utils
 pip install codetiming==1.4.0 mathruler==0.1.0 pylatexenc==2.10 torchdata==0.11.0 omegaconf==2.3.0 wandb==0.19.11                # EasyR1 Requirements
-
-# LLaMA-Factory setup
-git clone https://github.com/hiyouga/LLaMA-Factory.git            # Alternatively, use your local copy of LLaMA-Factory
-cd LLaMA-Factory
-pip install -e ".[torch,metrics]"
-cd ..
