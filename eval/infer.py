@@ -221,8 +221,8 @@ def process_single_response(data: ProcessData):
             bbox_list_new, movement_list_new = allindex[tmp_index]["bbox_list"], allindex[tmp_index]["movement_list"]
             image_index_new = current_image_index + cnt
             image_index, bbox_list, movement_list = merge_bbox_movement(
-                bbox_list_origin=data.bbox_list_origin,
-                movement_list_origin=data.movement_list_origin,
+                bbox_list_origin=bbox_list,
+                movement_list_origin=movement_list,
                 bbox_list_new=bbox_list_new,
                 movement_list_new=movement_list_new,
                 image_index_new=image_index_new,
