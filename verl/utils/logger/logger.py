@@ -88,7 +88,7 @@ class TensorBoardLogger(Logger):
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         exp_name = exp_name or 'experiment'
         self.log_dir = os.path.join(
-            os.getenv("TENSORBOARD_DIR", "/ossfs/workspace/nas/wujunfei/code/ground_spatial_r1_video/tensorboard_log"), # ./tensorboard_log
+            os.getenv("TENSORBOARD_DIR", "path/to/tensorboard_log"), # ./tensorboard_log
             f"{exp_name}_{timestamp}"
         )
         os.makedirs(self.log_dir, exist_ok=True)
