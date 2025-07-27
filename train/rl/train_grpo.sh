@@ -8,7 +8,7 @@ SYSTEM_PROMPT="""\n### Guidance:\nYou are a spatial reasoning assistant with acc
 
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 python3 -m verl.trainer.main \
-    config=scripts/config.yaml \
+    config=scripts/config_grpo.yaml \
     data.train_files=./ViLaSR-data/rl/vilasr_rl_data.jsonl \
     data.val_files=./ViLaSR-data/rl/vilasr_rl_data.jsonl \
     data.max_response_length=13312 \
@@ -27,4 +27,4 @@ python3 -m verl.trainer.main \
     trainer.n_gpus_per_node=8 \
     trainer.nnodes=4 \
     trainer.save_freq=50 \
-    trainer.save_checkpoint_path='checkpoints/rl/qwen2_5_vl-7b_vilasr_grpo' \
+    trainer.save_checkpoint_path='checkpoints/rl/qwen2_5_vl-7b_vilasr_grpo' 

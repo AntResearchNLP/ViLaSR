@@ -157,6 +157,13 @@ cd ViLaSR
 bash train/rl/train_grpo.sh       
 ```
 
+Merge checkpoint in HuggingFace format
+```
+# Specify the local directory
+python3 utils/model_merger.py --local_dir checkpoints/rl/qwen2_5_vl-7b_vilasr_grpo/global_step_1/actor
+```
+
+
 ### 3. Inference & Evaluation
 
 You can download the pretrained models:
